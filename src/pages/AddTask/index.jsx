@@ -21,11 +21,11 @@ export const AddTask = () => {
                     placeholder="adicione uma descrição"
                     onChange={(e) => setDescription(e.target.value)}
                 ></Input>
-                
+
                 <h3>informe uma prioridade</h3>
 
 
-                <Submit onClick={() => usePostTodoData(name, description)}>Adicionar</Submit>
+            <Submit onClick={() => usePostTodoData(name, description)}>Adicionar</Submit>
             </FormsContainer>
         </Container>
     )
@@ -51,24 +51,28 @@ const Input = styled.input.attrs({ type: 'text' })`
     &:hover {
         margin-left: 8px;
     }
+    
 `
 
 const FormsContainer = styled.div`
     border: solid #99bacf;
-    background-color: #99bacf;
+    background: linear-gradient(-45deg, #abc3e2, #99bacf);
     padding: 15px;
     width: 75%;
     border-radius: 15px;
+    
+    justify-content: center;
 `
 
 const Submit = styled.button`
-    width: 100px;
+    width: 100%;
     height: 60px;
     border-radius: 5px;
     border: none;
+    margin-top: 25px;
     transition: 1s all;
-    background: linear-gradient(75deg, #dddddd, #99bacf, #0ea3c9);
-    background-size: 300%;
+    background: linear-gradient(75deg, #dddddd, #99bacf, #237381);
+    background-size: 500%;
 
     &:hover {
         background-position: 100%;
@@ -76,4 +80,5 @@ const Submit = styled.button`
         font-weight: bold;
         color: #e5e5e5;
     }
+
 `

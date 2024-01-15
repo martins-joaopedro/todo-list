@@ -1,5 +1,6 @@
 import { useState } from "react"
 import styled from "styled-components"
+import { MdOutlineDone } from "react-icons/md";
 
 export const List = ({ name, done }) => {
 
@@ -16,9 +17,8 @@ export const List = ({ name, done }) => {
                 onClick={toggleCheckBox}
             >    
                 { !!isChecked && 
-                <CheckedIcon 
-                    src="/public/assets/icon.png"
-                /> }
+                <MdOutlineDone></MdOutlineDone>
+             }
             </CheckboxContainer>
             <TaskName>{name}</TaskName>
             <Trash className="trash"></Trash>
@@ -50,11 +50,6 @@ const CheckboxContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-`
-
-const CheckedIcon = styled.img`
-    width: 100%;
-    filter: saturate(12) brightness(-3);
     
 `
 
