@@ -17,10 +17,10 @@ export const List = ({ name, done }) => {
             >    
                 { !!isChecked && 
                 <CheckedIcon 
-                    src="./assets/icon.png"
+                    
                 /> }
             </CheckboxContainer>
-            <TaskName>{name} aaaaaaaaaaaaaaaaaaaaaaaaaaaa</TaskName>
+            <TaskName>{name}</TaskName>
             <Trash className="trash"></Trash>
         </Container>
     )

@@ -23,7 +23,7 @@ export const Home = () => {
             <h1>Suas tarefas: </h1>
             <div>
                 {data?.map(todo => <List key={todo.id} 
-                    name={todo.name}
+                    name={todo.nome}
                     done={todo.concluido}
                     ></List>)}
                 {!data.length && <div>carregando...</div>

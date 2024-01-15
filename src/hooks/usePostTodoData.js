@@ -1,11 +1,14 @@
 import axios from "axios"
 
-export const usePostTodoData = () => {
+export const usePostTodoData = (nome, descricao) => {
+
+    let concluido = true;
+    let prioridade = 1;
 
     axios.post("https://desafio-todolist.onrender.com/todos", {
-        descricao: "aaa",
-        concluido: true,
-        nome: "desc2",
-        prioridade: 1
-    })
+        nome,
+        descricao,
+        concluido,
+        prioridade
+    }).then(() => console.log("Adicionado ao banco"))
 }
