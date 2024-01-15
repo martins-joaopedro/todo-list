@@ -14,7 +14,7 @@ export const Home = () => {
     }
 
     useEffect(() => {
-       // getData()
+       getData()
     },[])
 
 
