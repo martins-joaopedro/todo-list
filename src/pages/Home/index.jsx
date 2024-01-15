@@ -14,7 +14,7 @@ export const Home = () => {
     }
 
     useEffect(() => {
-        getData()
+       // getData()
     },[])
 
 
@@ -26,6 +26,9 @@ export const Home = () => {
                     name={todo.name}
                     done={todo.concluido}
                     ></List>)}
+                {!data.length && <div>carregando...</div>
+
+                }
             </div>
         </Container>
     )
