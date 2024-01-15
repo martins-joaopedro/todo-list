@@ -17,7 +17,7 @@ export const List = ({ name, done }) => {
             >    
                 { !!isChecked && 
                 <CheckedIcon 
-                    
+                    src="/public/assets/icon.png"
                 /> }
             </CheckboxContainer>
             <TaskName>{name}</TaskName>
