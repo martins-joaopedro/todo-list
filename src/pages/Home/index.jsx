@@ -21,19 +21,25 @@ export const Home = () => {
     return(
         <Container>
             <h1>Suas tarefas: </h1>
-            <div>
-                {data?.map(todo => <List key={todo.id} 
+            <>
+                {data?.map(todo => <List 
+                    key={todo.id} 
+                    id={todo.id}
                     name={todo.nome}
                     done={todo.concluido}
-                    ></List>)}
+                    ></List>
+                )}
                 {!data.length && <div>carregando...</div>
 
                 }
-            </div>
+            </>
         </Container>
     )
 } 
 
 const Container = styled.div`
     padding-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `

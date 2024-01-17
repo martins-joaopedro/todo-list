@@ -1,8 +1,17 @@
 import { useState } from "react"
 import styled from "styled-components"
 import { MdOutlineDone } from "react-icons/md";
+import { IoTrashSharp  } from "react-icons/io5";
+import { useDeleteData } from "../../hooks/useDeleteData";
 
-export const List = ({ name, done }) => {
+export const List = ({ name, done, id }) => {
+
+    const priorities = [
+        { value: "adiável"}, 
+        { value: "importante" }, 
+        { value: "urgente" }, 
+        { value: "atrasada" }
+    ]
 
     const [ isChecked, setIsChecked ] = useState(done)
 
@@ -17,17 +26,23 @@ export const List = ({ name, done }) => {
                 onClick={toggleCheckBox}
             >    
                 { !!isChecked && 
-                <MdOutlineDone></MdOutlineDone>
+                <MdOutlineDone className="icon" />
              }
             </CheckboxContainer>
             <TaskName>{name}</TaskName>
-            <Trash className="trash"></Trash>
+            <Trash
+                onClick={() => useDeleteData(id)} 
+                className="trash">
+                <IoTrashSharp className="icon" />
+            </Trash>
         </Container>
     )
 }
 
 const Container = styled.div`
-    margin: 10px;
+    margin-top: 10px;
+    width: 90vw;
+    max-width: 700px;
     background-color: ${props => props.checked ? "#66b3d1" : "#7c7c7c"};
     border-radius: 8px;
     padding: 10px;
@@ -40,6 +55,10 @@ const Container = styled.div`
             opacity: 1;
         }
     }
+
+    .icon {
+        font-size: 1.5rem;
+    }
 `
 
 const CheckboxContainer = styled.div`
@@ -50,7 +69,6 @@ const CheckboxContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    
 `
 
 const TaskName = styled.p`
@@ -63,12 +81,12 @@ const TaskName = styled.p`
 
 const Trash = styled.button`
     width: 35px;
-    border-radius: 50%;
+    border-radius: 5px;
     aspect-ratio: 1;
-    background-color: red;
     position: absolute;
     right: 10px;
     opacity: 0;
     border: none;
     transition: 0.2s ease-out;
+    background: transparent;
 `
