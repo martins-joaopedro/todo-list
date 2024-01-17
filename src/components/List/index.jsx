@@ -19,6 +19,8 @@ export const List = ({ name, done, id }) => {
         setIsChecked(isChecked => !isChecked);
     }
 
+    const { mutate: deleteData } = useDeleteData();
+
     return(
         <Container checked={isChecked}>
             <CheckboxContainer 
@@ -31,7 +33,7 @@ export const List = ({ name, done, id }) => {
             </CheckboxContainer>
             <TaskName>{name}</TaskName>
             <Trash
-                onClick={() => useDeleteData(id)} 
+                onClick={() => deleteData(id)} 
                 className="trash">
                 <IoTrashSharp className="icon" />
             </Trash>

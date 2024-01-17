@@ -1,11 +1,9 @@
-import axios from "axios"
+import { api } from "../services/api";
 
 export const usePostTodoData = (nome, descricao, prioridade) => {
-
-    console.log(nome, descricao, prioridade)
     let concluido = false;
 
-    axios.post("https://desafio-todolist.onrender.com/todos", {
+    api.post("https://desafio-todolist.onrender.com/todos", {
         nome,
         descricao,
         concluido,

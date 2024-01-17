@@ -1,9 +1,26 @@
 import axios from "axios"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 
-export const useDeleteData = (id) => {
+export function useDeleteData() {
 
-    console.log(id)
+    const queryClient = useQueryClient();
+    const mutate = useMutation({
+        mutationFn: deleteData,
+        retry: 2,
+        onSuccess: () => {
+            queryClient.invalidateQueries(['getAllTodos'])
+        }
+    })
 
-    axios.delete("https://desafio-todolist.onrender.com/todos/" + id) 
-        .then(() => console.log("Apagado do banco"))
+    return mutate;
 }
+
+const deleteData = (id) => {
+    console.log(id)
+    axios.delete("https://desafio-todolist.onrender.com/todos/" + id) 
+    .then(() => {
+        console.log("Apagado do banco")
+    })
+}
+
+
