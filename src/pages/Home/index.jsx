@@ -5,12 +5,14 @@ import { useEffect, useState } from "react"
 
 export const Home = () => {
 
+    const [ isLoading, setIsLoading ] = useState(true)
     const [ data, setData ] = useState([])
     
     const getData = async () => {
         let d = await useTodoData();
         console.log("A", data)
         setData(d)
+        setIsLoading(false)
     }
 
     useEffect(() => {
@@ -29,9 +31,8 @@ export const Home = () => {
                     done={todo.concluido}
                     ></List>
                 )}
-                {!data.length && <div>carregando...</div>
-
-                }
+                {!data.length && isLoading && <div>carregando...</div> }
+                {!data.length && !isLoading && <div>nenhuma tarefa encontrada </div> }
             </>
         </Container>
     )
