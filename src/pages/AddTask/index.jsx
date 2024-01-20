@@ -3,14 +3,21 @@ import styled from "styled-components"
 import { usePostTodoData } from "../../hooks/usePostTodoData"
 import { useState } from "react"
 import { STYLES } from "../../../global"
-const { PRIORITIES } = STYLES;
+import { useNavigate } from "react-router-dom";
+import { IoClose } from "react-icons/io5";
+const { COLORS, PRIORITIES } = STYLES;
 
 export const AddTask = () => {
 
-    const [checked, setChecked] = useState(-1)
+    const [priorityId, setPriorityId] = useState(-1)
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     
+    const { mutate: postData, status } = usePostTodoData();
+    const navigator = useNavigate();
+
+    //status == "success" ? navigator("/") : {}
+
     const priorities = [
         { value: "adiável"}, 
         { value: "importante" }, 
@@ -20,41 +27,56 @@ export const AddTask = () => {
 
     return(
         <Container>
-             <FormsContainer>
-                <Title 
-                    size={"1.5rem"}
-                    bold={"bold"}>
-                    Adicionar Tarefa
-                </Title>
-                
-                <Input 
-                    placeholder="informe um nome"
-                    onChange={(e) => setName(e.target.value)}
-                ></Input>
-                <Input 
-                    placeholder="adicione uma descrição"
-                    onChange={(e) => setDescription(e.target.value)}
-                ></Input>
+            <FormsContainer>
+                <FormsContainer.Icon
+                    onClick={() => navigator("/")}
+                >
+                    <IoClose className="icon"/>
+                </FormsContainer.Icon>
 
-                <Title 
-                    size={"1.2rem"}>
-                    informe uma prioridade
-                </Title>
+                <FormsContainer.Box className="input">
+                    <Title 
+                        size={"1.5rem"}
+                        bold={"bold"}>
+                        Adicionar Tarefa
+                    </Title>
+                    
+                    <Input 
+                        placeholder="informe um nome"
+                        onChange={(e) => setName(e.target.value)}
+                    ></Input>
+                    <Input 
+                        placeholder="adicione uma descrição"
+                        onChange={(e) => setDescription(e.target.value)}
+                    ></Input>
+                </FormsContainer.Box>
 
-                <PriorityContainer>
-                    {
-                        priorities.map(({ value }, i) => 
-                        <Priority 
-                            onClick={()=> setChecked(i)}
-                            className={checked == i ? "check": ""}
-                            color={PRIORITIES[i]}
-                            key={i}>
-                                <Priority.Value className="name">{value}</Priority.Value>
-                        </Priority>)
-                    }
-                </PriorityContainer>
+                <FormsContainer.Box>
+                    <Title 
+                        size={"1.2rem"}>
+                        informe uma prioridade
+                    </Title>
 
-            <Submit onClick={() => usePostTodoData(name, description, checked)}>Adicionar</Submit>
+                    <PriorityContainer>
+                        {
+                            priorities.map(({ value }, i) => 
+                            <Priority 
+                                onClick={()=> setPriorityId(i)}
+                                className={priorityId == i ? "check": ""}
+                                color={PRIORITIES[i]}
+                                key={i}>
+                                    <Priority.Value className="name">{value}</Priority.Value>
+                            </Priority>)
+                        }
+                    </PriorityContainer>
+                </FormsContainer.Box>
+
+
+                <Submit onClick={() =>  {
+                    postData({name, description, priorityId})
+                    }}>
+                    Adicionar
+                </Submit>
             </FormsContainer>
         </Container>
     )
@@ -62,12 +84,54 @@ export const AddTask = () => {
 
 const Container = styled.div`
     display: flex;
-    margin-top: 30px;
     justify-content: center;
+    margin-top: 50px;
+`
+
+const FormsContainer = styled.div`
+    //background: linear-gradient(-45deg, ${COLORS.MAIN}, ${COLORS.SECONDARY});
+    background-color: #949494;
+    padding: 20px;
+    width: 85%;
+    max-width: 540px;
+    min-height: 500px;
+    border-radius: 15px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+    
+`
+FormsContainer.Box = styled.div`
+    width: 100%;
+
+    &.input {
+        display: flex;
+        flex-direction: column;
+    }
+`
+
+FormsContainer.Icon = styled.button`
+    position: absolute;
+    top: 0px;
+    right: 0;
+    width: 40px;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    .icon {
+        width: 100%;
+        font-size: 30px;
+        
+    }
 `
 
 const Input = styled.input.attrs({ type: 'text' })`
-    width: 75%;
     border: none;
     border-radius: 15px;
     height: 35px;
@@ -77,7 +141,7 @@ const Input = styled.input.attrs({ type: 'text' })`
     outline: none;
     transition: 0.6s all;
     font-size: 1rem;
-
+    
     &:hover {
         margin-left: 8px;
     }
@@ -87,28 +151,18 @@ const Input = styled.input.attrs({ type: 'text' })`
 const Title = styled.p`
     font-size: ${props => props.size};
     font-weight: ${props => props.bold || ""};
-    margin-top: 15px;
-`
-
-const FormsContainer = styled.div`
-    background: linear-gradient(-45deg, #abc3e2, #99bacf);
-    padding: 15px;
-    width: 75%;
-    min-height: 500px;
-    border-radius: 15px;
-    justify-content: center;
-    width: 90vw;
-    max-width: 700px;
+    margin-top: 25px;
+    color: ${COLORS.MAIN_DARK};
 `
 
 const Submit = styled.button`
-    width: 100%;
+    width: 90%;
     height: 60px;
     border-radius: 5px;
     border: none;
     margin-top: 25px;
     transition: 1s all;
-    background: linear-gradient(75deg, #dddddd, #99bacf, #237381);
+    background: linear-gradient(75deg, #dddddd, #99bacf, #202020);
     background-size: 500%;
 
     &:hover {
@@ -125,6 +179,7 @@ const PriorityContainer = styled.div`
     justify-content: space-around;
     align-items: center;
     padding: 5px;
+    margin-top: 20px;
 `
 
 const Priority = styled.div`
@@ -139,13 +194,12 @@ const Priority = styled.div`
     transition: 0.2s all ease-out;
     text-overflow: ellipsis;
     overflow: hidden;
-    
+
     &:hover {
-        filter: brightness(1);
         padding-left: 8px;
         padding-right: 8px;
         width: 25%;
-        
+
         .name {
             display: block;
         }
@@ -155,17 +209,16 @@ const Priority = styled.div`
         width: 25%;
         filter: none;
         background-color: #303030;
-
+        
         .name {
             display: block;
         }
     }
-    `
+`
 
 Priority.Value = styled.p`
     font-weight: bold;
-    color: #f1f1f1;
+    color: #e6e6e6;
     font-size: 0.8rem;
     display: none;
-    
 `

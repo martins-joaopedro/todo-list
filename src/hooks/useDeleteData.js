@@ -5,9 +5,11 @@ export function useDeleteData() {
 
     const queryClient = useQueryClient();
     const mutate = useMutation({
+        mutationKey: ['deleteTodo'],
         mutationFn: deleteData,
         retry: 2,
         onSuccess: () => {
+            console.log("Apagado do banco")
             queryClient.invalidateQueries(['getAllTodos'])
         }
     })
@@ -15,12 +17,8 @@ export function useDeleteData() {
     return mutate;
 }
 
-const deleteData = (id) => {
-    console.log(id)
-    axios.delete("https://desafio-todolist.onrender.com/todos/" + id) 
-    .then(() => {
-        console.log("Apagado do banco")
-    })
+const deleteData = async (id) => {
+    await axios.delete("https://desafio-todolist.onrender.com/todos/" + id) 
 }
 
 
