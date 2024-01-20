@@ -16,7 +16,7 @@ export const AddTask = () => {
     const { mutate: postData, status } = usePostTodoData();
     const navigator = useNavigate();
 
-    //status == "success" ? navigator("/") : {}
+    status == "success" ? navigator("/") : {}
 
     const priorities = [
         { value: "adiável"}, 
@@ -104,6 +104,7 @@ const FormsContainer = styled.div`
     position: relative;
     
 `
+
 FormsContainer.Box = styled.div`
     width: 100%;
 
