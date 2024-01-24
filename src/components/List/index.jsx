@@ -47,9 +47,9 @@ export const List = ({ todo }) => {
 }
 
 const Container = styled.div`
-    margin-top: 10px;
-    width: 90vw;
+    width: 90%;
     max-width: 700px;
+    margin-top: 10px;
     background-color: ${props => props.checked ? "#66b3d1" : "#7c7c7c"};
     border-radius: 8px;
     padding: 10px;

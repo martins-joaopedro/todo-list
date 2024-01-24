@@ -25,29 +25,31 @@ export const Home = () => {
             <Modal isopen={isOpen}>
                 <Form toggleModal={toggleModal}/>
             </Modal>
-            <Section>
-                <h1>Suas tarefas: </h1>
-                { !data?.length && status === "success" && <div>nenhuma tarefa encontrada </div> }
-                <AddTaskButton
-                    onClick={() => toggleModal()}
-                    >
-                    Adicionar nova tarefa
-                </AddTaskButton>
-            </Section>
-            <Section>
-                { isFetching && <div>carregando...</div> }
-                { isError && <Error></Error> }
-                {
-                    !isFetching && 
-                    <ListContainer>
-                        {status === "success" && data?.map(todo => <List 
-                            key={todo.id} 
-                            todo={todo}
-                            ></List>
-                        )}
-                    </ListContainer>
-                }
-            </Section>
+            <Main>
+                <Section>
+                    <h1>Suas tarefas: </h1>
+                    { !data?.length && status === "success" && <div>nenhuma tarefa encontrada </div> }
+                    <AddTaskButton
+                        onClick={() => toggleModal()}
+                        >
+                        Adicionar nova tarefa
+                    </AddTaskButton>
+                </Section>
+                <Section>
+                    { isFetching && <div>carregando...</div> }
+                    { isError && <Error></Error> }
+                    {
+                        !isFetching && 
+                        <ListContainer>
+                            {status === "success" && data?.map(todo => <List 
+                                key={todo.id} 
+                                todo={todo}
+                                ></List>
+                            )}
+                        </ListContainer>
+                    }
+                </Section>
+            </Main>
         </Container>
     )
 } 
@@ -56,20 +58,33 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100%;
+`
+
+const Main = styled.div`
+    width: 100%;
+    height: 100%;
+    max-width: 700px;
+
+    @media screen and (width > 768px) {
+        background-color: #3030301d;
+        border-left: 1px solid #4e4e4e24;
+        border-right: 1px solid #4e4e4e24;
+    }
 `
 
 const Section = styled.section`
-    width: 100%;
     min-height: 120px;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 15px;
-    position: relative;
+    position: relative;  
 `
 
-const AddTaskButton = styled.button`
-    width: 50%;
+const AddTaskButton = styled.div`
+    width: 90%;
+    max-width: 700px;
     background-color: #303030;
     color: #e5e5e5;
     border: none;
@@ -79,13 +94,17 @@ const AddTaskButton = styled.button`
     transition: 0.2s all;
     position: absolute;
     bottom: 5px;
+    text-align: center;
     &:hover {
         background-color: #666666;
     }
 `
 
 const ListContainer = styled.div`
-    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 `
 
 
