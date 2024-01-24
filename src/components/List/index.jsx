@@ -3,8 +3,9 @@ import styled from "styled-components"
 import { MdOutlineDone } from "react-icons/md";
 import { IoTrashSharp  } from "react-icons/io5";
 import { useDeleteData } from "../../hooks/useDeleteData";
+import { useNavigate } from "react-router-dom";
 
-export const List = ({ name, done, id }) => {
+export const List = ({ todo }) => {
 
     const priorities = [
         { value: "adiável"}, 
@@ -13,16 +14,20 @@ export const List = ({ name, done, id }) => {
         { value: "atrasada" }
     ]
 
+    const { name, done, id } = todo;
     const [ isChecked, setIsChecked ] = useState(done)
 
     const toggleCheckBox = () => {
         setIsChecked(isChecked => !isChecked);
     }
 
+    const navigator = useNavigate();
     const { mutate: deleteData } = useDeleteData();
 
     return(
-        <Container checked={isChecked}>
+        <Container 
+            onClick={() => navigator(`/todo/${id}`)}
+            checked={isChecked}>
             <CheckboxContainer 
                 checked={isChecked}
                 onClick={toggleCheckBox}

@@ -3,20 +3,18 @@ import styled from "styled-components"
 import { usePostTodoData } from "../../hooks/usePostTodoData"
 import { useState } from "react"
 import { STYLES } from "../../../global"
-import { useNavigate } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
+import { useTodoData } from "../../hooks/useTodoData";
 const { COLORS, PRIORITIES } = STYLES;
 
-export const AddTask = () => {
+export const Form = ({ toggleModal }) => {
 
     const [priorityId, setPriorityId] = useState(-1)
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     
-    const { mutate: postData, status } = usePostTodoData();
-    const navigator = useNavigate();
-
-    status == "success" ? navigator("/") : {}
+    const { mutate: postData } = usePostTodoData();
+    const { status } = useTodoData();
 
     const priorities = [
         { value: "adiável"}, 
@@ -29,7 +27,7 @@ export const AddTask = () => {
         <Container>
             <FormsContainer>
                 <FormsContainer.Icon
-                    onClick={() => navigator("/")}
+                    onClick={() => toggleModal()}
                 >
                     <IoClose className="icon"/>
                 </FormsContainer.Icon>
@@ -71,10 +69,9 @@ export const AddTask = () => {
                     </PriorityContainer>
                 </FormsContainer.Box>
 
-
                 <Submit onClick={() =>  {
                     postData({name, description, priorityId})
-                    }}>
+                }}>
                     Adicionar
                 </Submit>
             </FormsContainer>
@@ -90,11 +87,11 @@ const Container = styled.div`
 
 const FormsContainer = styled.div`
     //background: linear-gradient(-45deg, ${COLORS.MAIN}, ${COLORS.SECONDARY});
-    background-color: #949494;
+    background-color: #aaaaaa;
     padding: 20px;
     width: 85%;
     max-width: 540px;
-    min-height: 500px;
+    min-height: 600px;
     border-radius: 15px;
     height: 500px;
     display: flex;

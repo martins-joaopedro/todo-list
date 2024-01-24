@@ -19,19 +19,13 @@ export const usePostTodoData = () => {
     }
 }
 
-const postData = (todo) => {
-    let concluido = false;
-    const { name: nome, description: descricao, priorityId: prioridade } = todo;
-    try {
-        api.post("https://desafio-todolist.onrender.com/todos", {
-            nome,
-            descricao,
-            concluido,
-            prioridade
-        }).then((r) => console.log(r))
-    } catch (err) {
-        console.log(err)
-    } finally {
-        console.log("Adicionado ao banco")
-    }
+const postData = async (todo) => {
+    let done = false;
+    const { name, description, priorityId } = todo;
+    await api.post("https://desafio-todolist.onrender.com/todos", {
+        name,
+        description,
+        priorityId, 
+        done
+    })
 }

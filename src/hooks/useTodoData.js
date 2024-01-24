@@ -6,7 +6,6 @@ export function useTodoData() {
     const query = useQuery({
         queryKey: ['getAllTodos'],
         queryFn: fetchData,
-        retry: 2
     })
 
     return {
@@ -17,5 +16,5 @@ export function useTodoData() {
 
 const fetchData = async () => {
     const res = await api.get("/todos")
-    return res.data;
+    return res?.data;
 }
